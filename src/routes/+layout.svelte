@@ -1,4 +1,6 @@
-<script>import "../app.css";</script>
+<script>
+  import "../app.css";
+</script>
 
 <div class="navbar bg-base-100">
     <div class="flex-1">
