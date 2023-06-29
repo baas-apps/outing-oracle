@@ -20,7 +20,16 @@
     <a class="btn btn-ghost normal-case text-xl">OutingOracle</a>
   </div>
   <div class="flex-none gap-2">
-    <button class="btn btn-primary" on:click={$app.logIn(Realm.Credentials.google({redirectUrl}))}>Google Login</button>
+    {#if user}
+    <div class="avatar">
+      <div class="w-12 mask mask-star-2">
+        <img src={$user?.profile.pictureUrl}>
+      </div>
+    </div>
+    {:else}
+      <button class="btn btn-primary" on:click={$app.logIn(Realm.Credentials.google({redirectUrl}))}>Google Login</button>
+    {/if}
+
   </div>
 </div>
 
