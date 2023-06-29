@@ -1,5 +1,5 @@
-const daisyui = require("daisyui");
 const typography = require("@tailwindcss/typography");
+const daisyui = require("daisyui");
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
@@ -7,6 +7,10 @@ const config = {
 
   theme: {
     extend: {}
+  },
+
+  daisyui: {
+    themes: ["winter"],
   },
 
   plugins: [typography, daisyui]

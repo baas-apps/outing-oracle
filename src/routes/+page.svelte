@@ -1,30 +1,16 @@
-<div class="hero min-h-screen bg-base-200">
-    <div class="hero-content flex-col lg:flex-row-reverse">
-      <div class="text-center lg:text-left">
-        <h1 class="text-5xl font-bold">Login now!</h1>
-        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      </div>
-      <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <div class="card-body">
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input type="text" placeholder="email" class="input input-bordered" />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input type="text" placeholder="password" class="input input-bordered" />
-            <label class="label">
-              <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-            </label>
-          </div>
-          <div class="form-control mt-6">
-            <button class="btn btn-primary">Login</button>
-          </div>
-        </div>
-      </div>
+<!-- /+layout.svelte -->
+
+<script lang="ts">
+  import baas from '$lib/assets/baas-beer.png';
+</script>
+
+<div class="hero min-h-screen ">
+  <div class="hero-content flex-col lg:flex-row">
+    <img src={baas} class="max-w-sm rounded-lg mr-5" />
+    <div>
+      <h1 class="text-5xl font-bold">Plan Our Next Team Outing</h1>
+      <p class="py-6">Elevate your team's outings with [App Name Pending]. Streamline the planning process, coordinate effortlessly, and create unforgettable experiences. Propose ideas, gather feedback, and find the perfect time that works for everyone.</p>
+      <button class="btn btn-primary"><a href="/create-poll">Start Planning</a></button>
     </div>
   </div>
+</div>

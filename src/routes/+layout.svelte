@@ -1,28 +1,33 @@
+<!-- /+layout.svelte -->
+
 <script>
   import "../app.css";
 </script>
 
 <div class="navbar bg-base-100">
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+      <a class="btn btn-ghost normal-case text-xl">OutingOracle</a>
     </div>
     <div class="flex-none gap-2">
-      <div class="form-control">
-        <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-      </div>
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-        </label>
-        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-          <li>
-            <a class="justify-between">
-              Profile
-              <span class="badge">New</span>
-            </a>
-          </li>
-          <li><a>Settings</a></li>
-          <li><a>Logout</a></li>
-        </ul>
+        <html>
+          <body>
+              <script src="https://accounts.google.com/gsi/client" async defer></script>
+              <div id="g_id_onload"
+                 data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                 data-login_uri="https://your.domain/your_login_endpoint"
+                 data-auto_prompt="false">
+              </div>
+              <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="sign_in_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+              </div>
+          </body>
+        </html>
       </div>
     </div>
   </div>
