@@ -57,7 +57,45 @@
             {/each}
         </tbody>
         </table>
-        <button class="btn btn-success my-3">Add Option</button>
+
+        <button class="btn btn-success my-3" onclick="custom_event_modal.showModal()">Add Option</button>
+        <dialog id="custom_event_modal" class="modal">
+        <form method="dialog" class="modal-box">
+            <div class="flex flex-col justify-center form-control w-full space-y-3">
+                <button class="btn btn-success my-3">Add Random Option</button>
+
+                <div class="divider"> OR </div> 
+
+                <div>
+                    <label class="label">
+                    <span class="label-text">Name</span>
+                    </label>
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+                </div>
+
+                <div>
+                <label class="label">
+                    <span class="label-text">Location</span>
+                </label>
+                <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+                </div>
+
+                <div>
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+                </div>
+
+                <button class="btn btn-success my-3">Add Custom Option</button>
+            </div>
+        </form>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+        </dialog>
+
+        <div class="divider"></div> 
         <button class="btn btn-primary">Create Event</button>
     </div>
 </div>
