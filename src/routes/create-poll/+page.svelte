@@ -41,7 +41,7 @@
     });
   }
 
-  async function closeModal() {
+  async function closeStartingModal() {
     isModalOpen = false;
   
     await populatePossibleOptions();
@@ -119,7 +119,7 @@
     </label>
   </div>
     <div class="modal-action">
-      <button class="btn" on:click={closeModal}>Start event</button>
+      <button class="btn" on:click={closeStartingModal}>Start event</button>
     </div>
   </div>
 </div>
