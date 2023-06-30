@@ -9,7 +9,6 @@
 
   async function login(redirectUrl:string){
     if ($app){
-      await $app.logIn(Realm.Credentials.google({redirectUrl}))
       $app = $app
 
       let loginPromise;
