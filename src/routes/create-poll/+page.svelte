@@ -85,6 +85,18 @@
     locationOptions.splice(idx, 1)
 	locationOptions = locationOptions;
   }
+
+  async function createEventDocument() {
+    if (!$user) {
+      return
+    }
+    const insertEventResult: any = await $user.callFunction("insertEvent", locationOptions);
+    if (insertEventResult.hasOwnProperty("error")) {
+      return
+    }
+    const id = insertEventResult.result
+    goto(`/poll?id=${id}`)
+  }
 </script>
 
 <div class="modal" class:modal-open={isModalOpen}>
@@ -180,7 +192,7 @@
         </dialog>
 
         <div class="divider"></div> 
-        <button class="btn btn-primary">Create Poll</button>
+        <button on:click={createEventDocument} class="btn btn-primary">Create Poll</button>
     </div>
 </div>
 <div class="flex justify-center items-center mt-10">
