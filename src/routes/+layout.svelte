@@ -1,7 +1,7 @@
 <!-- /+layout.svelte -->
 <script lang="ts">
   import "../app.css";
-  import { app, user} from '$lib/stores';
+  import { app, user } from '$lib/stores';
   import { dev } from '$app/environment';
   import { page } from '$app/stores';
   import * as Realm from "realm-web";
@@ -12,15 +12,15 @@
       await $app.logIn(Realm.Credentials.google({redirectUrl}))
       $app = $app
 
-      let p;
+      let loginPromise;
       if (dev) {
-         p = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
       } else {
-         p = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
       }
 
-     await p.then((u) => {
-        return u.callFunction("findAndInsert", {"_id": u.id, "name": u.profile.name, "email": u.profile.email})
+     await loginPromise.then((usr) => {
+        return usr.callFunction("findAndInsert", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
      })
 
       $user = $app.currentUser
