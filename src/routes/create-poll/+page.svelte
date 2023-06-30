@@ -66,6 +66,7 @@
         imageUrl: business.image_url,
         distance: business.distance,
         rating: business.rating,
+        price: business.price,
       })
     });
   }
@@ -190,6 +191,7 @@
                     <td>
                       <strong>{location.name}</strong>
                       <div><img src={ratingsToImage[location.rating]}/></div>
+                      <div><strong>{location.price || ''}</strong></div>
                     </td>
                     <td>
                       {location.location}
