@@ -9,8 +9,13 @@
 
   async function login(redirectUrl:string){
     if ($app){
-      await $app.logIn(Realm.Credentials.google({redirectUrl}))
+      await $app.logIn(Realm.Credentials.google({redirectUrl})).then((usr) => {
+        return usr.callFunction("findOrInsertUser", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
+      })
+
       $app = $app
+
+      $user = $app.currentUser
     }
   }
 
@@ -20,6 +25,7 @@
         $app = $app
     }
   }
+
 </script>
 
 <div class="navbar bg-base-100">
@@ -44,7 +50,6 @@
     {:else}
       <button class="btn btn-primary" on:click={() => {login(getRoute("auth", dev))}} >Google Login</button>
     {/if}
-
   </div>
 </div>
 
