@@ -15,14 +15,14 @@
         await $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
       }
 
-      $user = $user // Trigger reactivity
+      $user = $app.currentUser
     }
   }
 
   async function logout(){
     if ($user){
       await $user.logOut();
-      $user = $user // Trigger reactivity
+      $user = $app.currentUser
     }
   }
 
