@@ -1,7 +1,7 @@
 <!-- /+layout.svelte -->
 <script lang="ts">
   import "../app.css";
-  import { app, user } from '$lib/stores';
+  import { app, user} from '$lib/stores';
   import { dev } from '$app/environment';
   import { page } from '$app/stores';
   import * as Realm from "realm-web";
@@ -11,6 +11,23 @@
     if ($app){
       await $app.logIn(Realm.Credentials.google({redirectUrl}))
       $app = $app
+
+      let p;
+      if (dev) {
+         p = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
+      } else {
+         p = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
+      }
+
+     await p.then((u) => {
+        if ($user) {
+          return $user.callFunction("findAndInsert", {"_id": u.id}).then((a) => {
+            console.log(a)
+          })
+          }
+        })
+
+      $user = $app.currentUser
     }
   }
 
@@ -20,6 +37,7 @@
         $app = $app
     }
   }
+
 </script>
 
 <div class="navbar bg-base-100">
@@ -44,7 +62,6 @@
     {:else}
       <button class="btn btn-primary" on:click={() => {login(getRoute("auth", dev))}} >Google Login</button>
     {/if}
-
   </div>
 </div>
 
