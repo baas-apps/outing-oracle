@@ -20,12 +20,8 @@
       }
 
      await p.then((u) => {
-        if ($user) {
-          return $user.callFunction("findAndInsert", {"_id": u.id}).then((a) => {
-            console.log(a)
-          })
-          }
-        })
+        return u.callFunction("findAndInsert", {"_id": u.id, "name": u.profile.name, "email": u.profile.email})
+     })
 
       $user = $app.currentUser
     }
