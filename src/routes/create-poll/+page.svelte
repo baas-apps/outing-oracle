@@ -54,7 +54,7 @@
   }
 
   async function addRandomOption() {
-    if (possibleOptions.length) {
+    if (possibleOptions.length == 0) {
       await populatePossibleOptions()
     }
     var newOption = possibleOptions.shift()
@@ -65,7 +65,7 @@
   }
 
   async function shuffleOption(idx: number) {
-    if (possibleOptions.length) {
+    if (possibleOptions.length == 0) {
       await populatePossibleOptions()
     }
     var newOption = possibleOptions.shift()
