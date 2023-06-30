@@ -13,5 +13,6 @@ export default {
             strict: true
         })
     },
-	preprocess: [vitePreprocess()]
+
+    preprocess: [vitePreprocess()]
 };
