@@ -1,6 +1,13 @@
 <!-- create-poll/+page.svelte -->
 <script lang="ts">
   import map from '$lib/assets/map.jpg';
+  import { browser } from '$app/environment'; 
+  import { user } from '$lib/stores'
+  import { goto } from '$app/navigation';
+
+  if (browser && !($user?.isLoggedIn)){
+    goto('/')
+  }
 
   let locationData = [
     {
