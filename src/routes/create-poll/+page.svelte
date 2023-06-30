@@ -1,7 +1,15 @@
 <!-- create-poll/+page.svelte -->
 <script lang="ts">
   import map from '$lib/assets/map.jpg';
+  import { browser } from '$app/environment'; 
+  import { user } from '$lib/stores'
+  import { goto } from '$app/navigation';
   import type { LocationOption } from '../../types/location_option.type';
+
+
+  if (browser && !($user?.isLoggedIn)){
+    goto('/')
+  }
   
   let customOptionName = '';
   let customOptionLocation = '';
