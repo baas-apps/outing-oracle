@@ -11,6 +11,19 @@
     if ($app){
       await $app.logIn(Realm.Credentials.google({redirectUrl}))
       $app = $app
+
+      let loginPromise;
+      if (dev) {
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
+      } else {
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
+      }
+
+     await loginPromise.then((usr) => {
+        return usr.callFunction("findAndInsert", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
+     })
+
+      $user = $app.currentUser
     }
   }
 
@@ -20,6 +33,7 @@
         $app = $app
     }
   }
+
 </script>
 
 <div class="navbar bg-base-100">
@@ -44,7 +58,6 @@
     {:else}
       <button class="btn btn-primary" on:click={() => {login(getRoute("auth", dev))}} >Google Login</button>
     {/if}
-
   </div>
 </div>
 
