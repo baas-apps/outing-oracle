@@ -3,7 +3,7 @@
   import { browser } from '$app/environment'; 
   import { user } from '$lib/stores'
   import { goto } from '$app/navigation';
-  import type { LocationOption } from '../../types/location_option.type';
+  import type { LocationOption } from '../../types/location-option.type';
   
   
   let customOptionName = '';
