@@ -133,6 +133,9 @@
   .location-thumbnail {
     max-width: 100px;
   }
+  .location-ctrl {
+    font-size: 34px;
+  }
 </style>
 
 <div class="modal" class:modal-open={isModalOpen}>
@@ -201,8 +204,8 @@
                     </td>
                     <td>
                         <div class="flex flex-row space-x-2">
-                            <button on:click={() => shuffleOption(idx)} class="btn btn-outline btn-primary">🎲</button>
-                            <button on:click={() => removeLocationOption(idx) } class="btn btn-outline btn-error">➖</button>
+                            <button on:click={() => shuffleOption(idx)} class="btn btn-outline btn-primary location-ctrl">🎲</button>
+                            <button on:click={() => removeLocationOption(idx) } class="btn btn-outline btn-error location-ctrl">➖</button>
                         </div>
                     </td>
                 </tr>
