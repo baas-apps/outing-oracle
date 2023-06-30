@@ -6,17 +6,14 @@
     {
         name: "bar1",
         location: "midtown",
-        description: "a bar",
     },
     {
         name: "bar2",
         location: "soho",
-        description: "a bar 2",
     },
     {
         name: "bar3",
         location: "hells kitchen",
-        description: "a bar 3",
     },
   ]
 </script>
@@ -38,7 +35,6 @@
             <tr>
             <th>Name</th>
             <th>Location</th>
-            <th>Description</th>
             </tr>
         </thead>
         <tbody>
@@ -46,7 +42,6 @@
                 <tr class="hover bg-base-200">
                     <td>{location.name}</td>
                     <td>{location.location}</td>
-                    <td>{location.description}</td>
                     <td>
                         <div class="flex flex-row space-x-2">
                             <button class="btn btn-outline btn-primary">🎲</button>

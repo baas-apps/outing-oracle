@@ -13,14 +13,15 @@
   } else {
     redirectUrl = "http://outing-oracle-hqdxg.mongodbstitch.com/auth"
   }
+
 </script>
 
 <div class="navbar bg-base-100">
   <div class="flex-1">
-    <a class="btn btn-ghost normal-case text-xl">OutingOracle</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/">OutingOracle</a>
   </div>
   <div class="flex-none gap-2">
-    {#if user}
+    {#if $user}
     <div class="avatar">
       <div class="w-12 mask mask-star-2">
         <img src={$user?.profile.pictureUrl}>
