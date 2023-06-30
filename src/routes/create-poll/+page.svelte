@@ -1,7 +1,16 @@
 <!-- create-poll/+page.svelte -->
 <script lang="ts">
-  import { user } from '$lib/stores';
-  import type { LocationOption } from '../../types/location-option.type';
+  import { browser } from '$app/environment'; 
+  import { user } from '$lib/stores'
+  import { goto } from '$app/navigation';
+  import type { LocationOption } from '../../types/location_option.type';
+  
+  
+  let customOptionName = '';
+  let customOptionLocation = '';
+
+  let possibleOptions: LocationOption[] = [];
+  let locationOptions: LocationOption[] = [];
 
   let isModalOpen = true
 
@@ -13,12 +22,9 @@
   let radiusInMiles = 2;
   let searchTerm = '';
 
-  
-  let customOptionName = '';
-  let customOptionLocation = '';
-
-  let possibleOptions: LocationOption[] = [];
-  let locationOptions: LocationOption[] = [];
+  if (browser && !($user?.isLoggedIn)){
+    goto('/')
+  }
 
   async function populatePossibleOptions() {
     if (!$user) {

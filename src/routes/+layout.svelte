@@ -3,17 +3,25 @@
   import "../app.css";
   import { app, user } from '$lib/stores';
   import { dev } from '$app/environment';
+  import { page } from '$app/stores';
   import * as Realm from "realm-web";
+	import { getRoute } from "$lib/util";
 
-  $user = $app ? $app.currentUser: null
-
-  async function login(){
+  async function login(redirectUrl:string){
     if ($app){
+      await $app.logIn(Realm.Credentials.google({redirectUrl}))
+      $app = $app
+
+      let loginPromise;
       if (dev) {
-        await $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
       } else {
-        await $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
+        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
       }
+
+     await loginPromise.then((usr) => {
+        return usr.callFunction("findAndInsert", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
+     })
 
       $user = $app.currentUser
     }
@@ -21,8 +29,8 @@
 
   async function logout(){
     if ($user){
-      await $user.logOut();
-      $user = $app.currentUser
+        await $user.logOut();
+        $app = $app
     }
   }
 
@@ -35,22 +43,21 @@
   <div class="flex-none gap-2">
     {#if $user?.isLoggedIn}
     <details class="dropdown dropdown-bottom dropdown-end">
-      <summary tabindex="0" class="m-1 avatar">
+      <summary class="m-1 avatar">
         <div class="avatar w-12 mask mask-squircle">
-          <img alt="User Profile Image" src={$user?.profile.pictureUrl}>
+          <img alt="User Profile" src={$user?.profile.pictureUrl}>
         </div>
       </summary>
 
-      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         <button class="btn btn-primary" on:click={logout}>
           Logout
         </button>
       </ul>
     </details>
     {:else}
-      <button class="btn btn-primary" on:click={login} >Google Login</button>
+      <button class="btn btn-primary" on:click={() => {login(getRoute("auth", dev))}} >Google Login</button>
     {/if}
-
   </div>
 </div>
 
