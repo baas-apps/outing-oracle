@@ -60,8 +60,6 @@
     numOptionsQueried = numOptionsQueried + numOptionsToQuery
     const businesses: any[] = yelpResult.businesses
     businesses.forEach(business => {
-      console.log("business.distance:", business.distance)
-      console.log("business.rating", business.rating)
       possibleOptions.push({
         name: business.name,
         location: business.location.address1,
