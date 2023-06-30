@@ -9,18 +9,11 @@
 
   async function login(redirectUrl:string){
     if ($app){
+      await $app.logIn(Realm.Credentials.google({redirectUrl})).then((usr) => {
+        return usr.callFunction("findOrInsertUser", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
+      })
+
       $app = $app
-
-      let loginPromise;
-      if (dev) {
-        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://localhost:5173/auth"}))
-      } else {
-        loginPromise = $app.logIn(Realm.Credentials.google({redirectUrl: "http://outing-oracle-hqdxg.mongodbstitch.com/auth"}))
-      }
-
-     await loginPromise.then((usr) => {
-        return usr.callFunction("findAndInsert", {"_id": usr.id, "name": usr.profile.name, "email": usr.profile.email})
-     })
 
       $user = $app.currentUser
     }
