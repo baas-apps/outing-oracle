@@ -4,8 +4,31 @@
   import { user } from '$lib/stores'
   import { goto } from '$app/navigation';
   import type { LocationOption } from '../../types/location-option.type';
+  import small0 from '$lib/assets/small_0.png';
+  import small1 from '$lib/assets/small_1.png';
+  import small1_5 from '$lib/assets/small_1_half.png';
+  import small2 from '$lib/assets/small_2.png';
+  import small2_5 from '$lib/assets/small_2_half.png';
+  import small3 from '$lib/assets/small_3.png';
+  import small3_5 from '$lib/assets/small_3_half.png';
+  import small4 from '$lib/assets/small_4.png';
+  import small4_5 from '$lib/assets/small_4_half.png';
+  import small5 from '$lib/assets/small_5.png';
   
+  const ratingsToImage: [number: any] = {
+    0: small0,
+    1: small1,
+    1.5: small1_5,
+    2: small2,
+    2.5: small2_5,
+    3: small3,
+    3.5: small3_5,
+    4: small4,
+    4.5: small4_5,
+    5: small1_5,
+  }
   
+  const METERS_PER_MILE = 1609.344
   let customOptionName = '';
   let customOptionLocation = '';
 
@@ -37,7 +60,15 @@
     numOptionsQueried = numOptionsQueried + numOptionsToQuery
     const businesses: any[] = yelpResult.businesses
     businesses.forEach(business => {
-      possibleOptions.push({name: business.name, location: business.location.address1})
+      console.log("business.distance:", business.distance)
+      console.log("business.rating", business.rating)
+      possibleOptions.push({
+        name: business.name,
+        location: business.location.address1,
+        imageUrl: business.image_url,
+        distance: business.distance,
+        rating: business.rating,
+      })
     });
   }
 
@@ -85,7 +116,14 @@
     locationOptions.splice(idx, 1)
 	locationOptions = locationOptions;
   }
+  
 </script>
+
+<style>
+  .location-thumbnail {
+    max-width: 100px;
+  }
+</style>
 
 <div class="modal" class:modal-open={isModalOpen}>
   <div class="modal-box">
@@ -129,15 +167,27 @@
         <!-- head -->
         <thead>
             <tr>
-            <th>Name</th>
-            <th>Location</th>
+              <th></th>
+              <th>Name</th>
+              <th>Location</th>
             </tr>
         </thead>
         <tbody>
             {#each locationOptions as location, idx}
                 <tr class="hover bg-base-200">
-                    <td>{location.name}</td>
-                    <td>{location.location}</td>
+                    <td>
+                        <img src={location.imageUrl} class="location-thumbnail"/>
+                    </td>
+                    <td>
+                      <strong>{location.name}</strong>
+                      <div><img src={ratingsToImage[location.rating]}/></div>
+                    </td>
+                    <td>
+                      {location.location}
+                      <div>
+                      {(location.distance / METERS_PER_MILE).toFixed(2)} miles away
+                      </div>
+                    </td>
                     <td>
                         <div class="flex flex-row space-x-2">
                             <button on:click={() => shuffleOption(idx)} class="btn btn-outline btn-primary">🎲</button>
@@ -183,5 +233,6 @@
         <button class="btn btn-primary">Create Poll</button>
     </div>
 </div>
-<div class="flex justify-center items-center mt-10">
+<div class="flex items-center mt-10">
 </div>
+
