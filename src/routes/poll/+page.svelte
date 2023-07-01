@@ -1,7 +1,7 @@
 <!-- poll/+page.svelte -->
 <script lang="ts">
     import { page } from '$app/stores';
-    import { app, user } from '$lib/stores'
+    import { user } from '$lib/stores'
     import * as Realm from "realm-web";
     
     enum Vote {
@@ -93,7 +93,8 @@
     async function endPoll(){
         // TODO: We should be doing this validation server side, but this was easier :)
         if (pollID && $user && $user.id == moderatorID){
-            $user?.callFunction("EndPoll", {"_id": new Realm.BSON.ObjectID(pollID)})
+            await $user?.callFunction("EndPoll", {"_id": new Realm.BSON.ObjectID(pollID)})
+            location.reload()
         }
     }
 
