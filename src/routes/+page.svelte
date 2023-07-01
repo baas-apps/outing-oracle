@@ -20,8 +20,8 @@
     <img src={baas} class="max-w-sm rounded-lg mr-5" />
     <div>
       <h1 class="text-5xl font-bold">Plan Our Next Team Outing</h1>
-      <p class="py-6">Elevate your team's outings with [App Name Pending]. Streamline the planning process, coordinate effortlessly, and create unforgettable experiences. Propose ideas, gather feedback, and find the perfect time that works for everyone.</p>
-      {#if $user}
+      <p class="py-6">Elevate your team's outings with OutingOracle. Streamline the planning process, coordinate effortlessly, and create unforgettable experiences. Propose ideas, gather feedback, and find the perfect time that works for everyone.</p>
+      {#if $user?.isLoggedIn}
         <button class="btn btn-primary"><a href="/create-poll">Start Planning</a></button>
       {:else}
         <button class="btn btn-primary" on:click={() => {login(getRoute("auth", dev))}}>Google Login</button>
