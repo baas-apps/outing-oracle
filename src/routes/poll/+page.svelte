@@ -128,7 +128,7 @@
             {#each locationData as location, idx}
                 <tr class="hover bg-base-200">
                     <td>{location.name}</td>
-                    <td>{location.location}</td>
+                    <td>{location.location || ''}</td>
                     <td>
                         <div class="flex flex-row space-x-2">
                             <button class="btn {location.vote == Vote.Yes? "":"btn-outline"} btn-success" on:click={() => {vote(idx, Vote.Yes)}}>️✓</button>

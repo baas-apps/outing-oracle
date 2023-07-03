@@ -91,7 +91,7 @@
     await populateVisitedPlaces();
     historyOptions = historyOptions;
 
-    // await populatePossibleOptions();
+    await populatePossibleOptions();
     for (let i = 0; i < 3; i++ ) {
       const option = possibleOptions.shift()
       if (option) {
@@ -266,26 +266,27 @@
         </form>
         </dialog>
 
+        {#if historyOptions.length > 0}
+        <div>
         <b class=" text-lg text-teal-500">Want to add a past location winner?</b>
-        <div class="flex flex-row justify-center w-full space-x-10 mt-5">
         <div class="flex flex-col overflow-x-auto">
-          <table class="table-auto block overflow-y-scrollable" style="height: 30vh;">
+          <table class="text-left w-full">
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Location</th>
+              <tr class="flex w-full mb-4 text-zinc-400 text-xs">
+                <th class="p-4 w-1/3 ">Name</th>
+                <th class="p-4 w-1/3">Location</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full" style="height: 20vh;">
               {#each historyOptions as historyOption, idx}
-                <tr class="hover bg-base-200">
-                  <td>
+                <tr class="hover bg-base-200 flex w-full mb-4">
+                  <td class="p-4 w-1/3">
                     <strong>{historyOption.name}</strong>
                   </td>
-                  <td>
+                  <td class="p-4 w-1/3">
                     {historyOption.location || ''}
                   </td>
-                  <td>
+                  <td class="p-4 w-1/3">
                     <div class="flex flex-row space-x-2">
                         <button on:click={() => addPastLocationOption(historyOption, idx)} class="btn btn-outline btn-primary location-ctrl">➕</button>
                     </div>
@@ -296,6 +297,7 @@
           </table>
         </div>
       </div>
+      {/if}
         <div class="divider"></div> 
         <button on:click={createEventDocument} class="btn btn-primary">Create Poll</button>
     </div>
