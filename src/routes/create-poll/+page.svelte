@@ -34,6 +34,7 @@
 
   let possibleOptions: LocationOption[] = [];
   let locationOptions: LocationOption[] = [];
+  let historyOptions: LocationOption[] = [];
 
   let isModalOpen = true
 
@@ -71,9 +72,25 @@
     });
   }
 
+  async function populateVisitedPlaces() {
+    if (!$user) {
+      return;
+    }
+    const visitedPlaces: any[] = await $user.callFunction("findVisitedPlaces");
+    visitedPlaces.forEach(visitedPlace => {
+      historyOptions.push({
+        name: visitedPlace.name,
+        location: visitedPlace.address,
+      })
+    })
+  }
+
   async function closeStartingModal() {
     isModalOpen = false;
   
+    await populateVisitedPlaces();
+    historyOptions = historyOptions;
+
     await populatePossibleOptions();
     for (let i = 0; i < 3; i++ ) {
       const option = possibleOptions.shift()
@@ -107,13 +124,19 @@
   
   function addCustomLocationOption() {
     locationOptions = [...locationOptions, {name: customOptionName, location: customOptionLocation}];
-	customOptionName = '';
+	  customOptionName = '';
     customOptionLocation = '';
+  }
+
+  function addPastLocationOption(historyOption: LocationOption, idx: number) {
+    locationOptions = [...locationOptions, historyOption];
+    historyOptions.splice(idx, 1);
+    historyOptions = historyOptions;
   }
 
   function removeLocationOption(idx: number) {
     locationOptions.splice(idx, 1)
-	locationOptions = locationOptions;
+	  locationOptions = locationOptions;
   }
 
   async function createEventDocument() {
@@ -197,9 +220,9 @@
                       <div><strong>{location.price || ''}</strong></div>
                     </td>
                     <td>
-                      {location.location}
+                      {location.location || ''}
                       <div>
-                      {(location.distance / METERS_PER_MILE).toFixed(2)} miles away
+                      {location.distance ? `${(location.distance / METERS_PER_MILE).toFixed(2)} miles away` : ''}
                       </div>
                     </td>
                     <td>
@@ -243,6 +266,38 @@
         </form>
         </dialog>
 
+        {#if historyOptions.length > 0}
+        <div>
+        <b class=" text-lg text-teal-500">Want to add a past location winner?</b>
+        <div class="flex flex-col overflow-x-auto">
+          <table class="text-left w-full">
+            <thead>
+              <tr class="flex w-full mb-4 text-zinc-400 text-xs">
+                <th class="p-4 w-1/3 ">Name</th>
+                <th class="p-4 w-1/3">Location</th>
+              </tr>
+            </thead>
+            <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full" style="height: 20vh;">
+              {#each historyOptions as historyOption, idx}
+                <tr class="hover bg-base-200 flex w-full mb-4">
+                  <td class="p-4 w-1/3">
+                    <strong>{historyOption.name}</strong>
+                  </td>
+                  <td class="p-4 w-1/3">
+                    {historyOption.location || ''}
+                  </td>
+                  <td class="p-4 w-1/3">
+                    <div class="flex flex-row space-x-2">
+                        <button on:click={() => addPastLocationOption(historyOption, idx)} class="btn btn-outline btn-primary location-ctrl">➕</button>
+                    </div>
+                </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {/if}
         <div class="divider"></div> 
         <button on:click={createEventDocument} class="btn btn-primary">Create Poll</button>
     </div>
